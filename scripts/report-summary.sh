@@ -23,9 +23,9 @@ PROFILE="(desconhecido)"
 REPORT_DATE="(desconhecido)"
 
 if [ -f "$REPORT_DIR/metadata.txt" ]; then
-  TARGET="$(grep -m1 '^target:' "$REPORT_DIR/metadata.txt" | sed 's/^target:[[:space:]]*//')"
-  PROFILE="$(grep -m1 '^profile:' "$REPORT_DIR/metadata.txt" | sed 's/^profile:[[:space:]]*//')"
-  REPORT_DATE="$(grep -m1 '^date:' "$REPORT_DIR/metadata.txt" | sed 's/^date:[[:space:]]*//')"
+  TARGET="$(grep -m1 '^target:' "$REPORT_DIR/metadata.txt" | sed 's/^target:[[:space:]]*//' || true)"
+  PROFILE="$(grep -m1 '^profile:' "$REPORT_DIR/metadata.txt" | sed 's/^profile:[[:space:]]*//' || true)"
+  REPORT_DATE="$(grep -m1 '^date:' "$REPORT_DIR/metadata.txt" | sed 's/^date:[[:space:]]*//' || true)"
 fi
 
 FILES_FOUND=()

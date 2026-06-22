@@ -33,7 +33,11 @@ fi
 
 get_header_value() {
   local name="$1"
-  grep -i "^${name}:" "$HEADERS_FILE" 2>/dev/null | head -n1 | sed -E "s/^[^:]+:[[:space:]]*//I" | tr -d '\r'
+  # "|| true" no final é essencial: com pipefail ativo, grep sem match retorna
+  # exit 1 mesmo quando isso é o resultado normal/esperado (header ausente).
+  # Sem isso, "VALUE=$(get_header_value ...)" dispara set -e e mata o script
+  # silenciosamente no primeiro header ausente.
+  grep -i "^${name}:" "$HEADERS_FILE" 2>/dev/null | head -n1 | sed -E "s/^[^:]+:[[:space:]]*//I" | tr -d '\r' || true
 }
 
 print_result() {
