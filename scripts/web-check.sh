@@ -58,11 +58,15 @@ ffuf \
   -of json || true
 
 echo
-echo "[6/6] Nuclei controlado"
-nuclei \
+echo "[6/6] Nuclei controlado rápido"
+timeout 60s nuclei \
   -u "$TARGET" \
+  -tags exposure,misconfig \
   -severity low,medium,high,critical \
-  -rate-limit 5 \
+  -rate-limit 30 \
+  -timeout 3 \
+  -retries 0 \
+  -ni \
   -o "$OUT_DIR/nuclei.txt" || true
 
 echo
